@@ -7,12 +7,13 @@ Codebook for run_analysis.R
 #Loading data
 ## path where your files are
 path="E:/Coursera/Getting and Cleaning Data/UCI HAR Dataset"
+
 Data is loading thanks to the read.table command.
-One is supposed to write the full path in the read.table command.
+
 ##Train data set
 ###1
 read.table(file=, header=FALSE) in order to import data (there is no header on the .txt)
-for example : x_train<-read.table("E:/Coursera/Getting and Cleaning Data/UCI HAR Dataset/train/X_train.txt",header=FALSE), for y_train and subject_train too. Header is FALSE because it comes later.
+for example : x_train<-read.table(file=paste(path,"/train/X_train.txt", sep = ""),header=FALSE), for y_train and subject_train too. Header is FALSE because it comes later.
 combine y_train, subject_train and x_train by column
 ###2
 Combine all those data frame in one thanks to cbind command : 
@@ -28,11 +29,11 @@ Combine test and train by row with rbind command
 data<-rbind(train,test)
 
 ##Load columns names
-features<-read.table("E:/Coursera/Getting and Cleaning Data/UCI HAR Dataset/features.txt",header=FALSE,stringsAsFactors=FALSE) 
+features<-read.table(file=paste(path,"/features.txt", sep = ""),header=FALSE,stringsAsFactors=FALSE)
 stringsAsFactors is FALSE in order to make looping easier later.
 
 ##Load activity label names
-activity_label<-read.table("E:/Coursera/Getting and Cleaning Data/UCI HAR Dataset/activity_labels.txt",header=FALSE)
+activity_label<-read.table(file=paste(path,"/activity_labels.txt", sep = ""),header=FALSE)
 colnames(activity_label)[1]<-"CodeActivity"
 colnames(activity_label)[2]<-"Activity_label"
 
