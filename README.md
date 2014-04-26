@@ -5,21 +5,26 @@ Getting-and-Cleaning-Data
 Codebook for run_analysis.R
 
 #Loading data
+## path where your files are
+path="E:/Coursera/Getting and Cleaning Data/UCI HAR Dataset"
 Data is loading thanks to the read.table command.
 One is supposed to write the full path in the read.table command.
 ##Train data set
-###read.table(file=, header=FALSE) in order to import data (there is no header on the .txt)
+###1
+read.table(file=, header=FALSE) in order to import data (there is no header on the .txt)
 for example : x_train<-read.table("E:/Coursera/Getting and Cleaning Data/UCI HAR Dataset/train/X_train.txt",header=FALSE), for y_train and subject_train too. Header is FALSE because it comes later.
-###combine y_train, subject_train and x_train by column
+combine y_train, subject_train and x_train by column
+###2
 Combine all those data frame in one thanks to cbind command : 
 train<-cbind(y_train, subject_train, x_train)
 
 ##Test data set
+###1
 Data is loading thanks to the read.table command.
 One is supposed to write the full path in the read.table command.
 x_test, y_test, subject_test is loaded the same way as the train data set and combine with cbind as well.
-
-##Combine test and train by row with rbind command
+###2
+Combine test and train by row with rbind command
 data<-rbind(train,test)
 
 ##Load columns names
@@ -47,11 +52,14 @@ colnames(data)[3]<-"Subject"
 	
 	
 
-##Create a logical vector in which value=TRUE where the substring "mean()" or "std()" is in column name for each column in the data. This way we exclude meanFreq() variables as well.
+##Names keeping
+###1
+Create a logical vector in which value=TRUE where the substring "mean()" or "std()" is in column name for each column in the data. This way we exclude meanFreq() variables as well.
 z1<-grepl("mean()", colnames(data),fixed=TRUE)
 z2<-grepl("std()", colnames(data),fixed=TRUE)
 z<-z1|z2
-###Set the ID variables to TRUE
+###2
+Set the ID variables to TRUE
 z[2:3]<-TRUE
 
 #Create a tidy data set with only the measurements on the mean and standard deviation
