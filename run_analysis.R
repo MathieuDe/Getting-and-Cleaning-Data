@@ -1,32 +1,35 @@
 #loading data
-## path where your files are
-path="E:/Coursera/Getting and Cleaning Data/UCI HAR Dataset"
+## Please set your working directory to ~/UCI HAR Dataset"
+## For exemple "E:/Coursera/Getting and Cleaning Data/UCI HAR Dataset"
 
 ##train
 ###read.table(file=, header=FALSE) in order to import data (there is no header on the .txt)
-x_train<-read.table(file=paste(path,"/train/X_train.txt", sep = ""),header=FALSE)
-y_train<-read.table(file=paste(path,"/train/Y_train.txt", sep = ""),header=FALSE)
-subject_train<-read.table(file=paste(path,"/train/subject_train.txt", sep = ""),header=FALSE)
+x_train<-read.table("train/X_train.txt",header=FALSE)
+y_train<-read.table("train/Y_train.txt",header=FALSE)
+subject_train<-read.table("train/subject_train.txt",header=FALSE)
 ###combine y_train, subject_train and x_train by column
 train<-cbind(y_train, subject_train, x_train)
 
 ##test
-x_test<-read.table(file=paste(path,"/test/X_test.txt", sep = ""),header=FALSE)
-y_test<-read.table(file=paste(path,"/test/Y_test.txt", sep = ""),header=FALSE)
-subject_test<-read.table(file=paste(path,"/test/subject_test.txt", sep = ""),header=FALSE)
+x_test<-read.table("test/X_test.txt",header=FALSE)
+y_test<-read.table("test/Y_test.txt",header=FALSE)
+subject_test<-read.table("test/subject_test.txt",header=FALSE)
 test<-cbind(y_test,subject_test, x_test)
 
 #combine test and train by row
 data<-rbind(train,test)
 
 #load columns names
-features<-read.table(file=paste(path,"/features.txt", sep = ""),header=FALSE,stringsAsFactors=FALSE)
+features<-read.table("features.txt",header=FALSE,stringsAsFactors=FALSE)
 #load activity label names
-activity_label<-read.table(file=paste(path,"/activity_labels.txt", sep = ""),header=FALSE)
+activity_label<-read.table("activity_labels.txt",header=FALSE)
 colnames(activity_label)[1]<-"CodeActivity"
 colnames(activity_label)[2]<-"Activity_label"
+
 #merge activity labels with initial data (could have been done faster without a merge)
-data<-merge(activity_label, data, by.y="Activity", by.x="CodeActivity",sort=FALSE)
+colnames(data)[1]<-"CodeActivity"
+data<-merge(activity_label, data,sort=FALSE)
+
 #name colums
 ## naming measurement variables
 for (i in 1:561)
@@ -36,6 +39,7 @@ colnames(data)[1]<-"Activity"
 colnames(data)[2]<-"Activity Label"
 colnames(data)[3]<-"Subject"
 	
+
 
 
 #create a logical vector in which value=TRUE where the substring "mean()" or "std()" is in column namefor each column in the data
